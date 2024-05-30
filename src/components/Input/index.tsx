@@ -1,4 +1,5 @@
 import React from 'react';
+import FlexBox from '../FlexBox';
 
 interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
   text?: string;
@@ -18,14 +19,14 @@ function Input({
 }: InputProps) {
   return (
     <>
-      <div className="flex justify-start items-center w-fit">
+      <FlexBox className="w-fit" xAlign="start">
         {text && <span className="block text-sm font-bold ml-2">{text}</span>}
         {description && (
           <span className="block text-xs text-gray-400 font-bold ml-2">
             {description}
           </span>
         )}
-      </div>
+      </FlexBox>
       <input
         className={`text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300' : 'border-violet-200'} rounded-xl outline-none focus:border-violet-500`}
         {...props}
