@@ -6,6 +6,7 @@ import Select from '@/components/Select';
 import payStubOptions from '@/data/payStubOptions';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Textarea from '@/components/Textarea';
 
 function PayStubCorrectForm() {
   const router = useRouter();
@@ -32,6 +33,11 @@ function PayStubCorrectForm() {
         text="정정 액수"
         description="정정 액수를 입력해주세요 (단위: 원)"
         placeholder="ex) 1000000"
+      />
+      <Textarea
+        text="세부 내용"
+        description="정정 사유가 발생한 정확한 날짜, 정정 사유의 반영 여부를 작성해주세요"
+        placeholder="ex) 2024-05-25 휴일 근무 미반영으로 인한 수당 정정 신청"
       />
       <Button>정정 신청</Button>
       <Button intent="reverse" onClick={() => router.back()}>
