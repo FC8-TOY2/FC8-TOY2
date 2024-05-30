@@ -8,6 +8,7 @@ function Button({
   buttonStyle = 'default',
   type = 'button',
   children,
+  ...props
 }: ButtonProps) {
   let tailwind;
   switch (buttonStyle) {
@@ -21,14 +22,10 @@ function Button({
   }
 
   return (
-    <button className={tailwind} type={type || 'button'}>
+    <button className={tailwind} type={type} {...props}>
       {children}
     </button>
   );
 }
-
-Button.defaultProps = {
-  buttonStyle: 'default',
-};
 
 export default Button;
