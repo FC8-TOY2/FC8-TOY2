@@ -1,18 +1,34 @@
-export default function FormButtons() {
+interface ButtonProps {
+  backgroundColor?: string;
+  borderColor?: string;
+  buttonInnerText: string;
+  textColor?: string;
+  onClick?: () => void;
+}
+
+function Button({
+  backgroundColor,
+  borderColor,
+  buttonInnerText,
+  textColor,
+  onClick,
+}: ButtonProps) {
   return (
-    <div className="w-full flex flex-col gap-2 mt-8 text-center">
-      <button
-        type="button"
-        className="bg-violet-500 rounded-xl py-2 text-white"
-      >
-        로그인
-      </button>
-      <button
-        type="button"
-        className="border border-violet-500 rounded-xl py-2"
-      >
-        회원가입
-      </button>
-    </div>
+    <button
+      onClick={onClick}
+      type="button"
+      className={`${backgroundColor} ${borderColor} ${textColor} border rounded-xl py-2`}
+    >
+      {buttonInnerText}
+    </button>
   );
 }
+
+Button.defaultProps = {
+  backgroundColor: 'bg-white',
+  borderColor: 'border-violet-400',
+  textColor: 'text-black',
+  onClick: null,
+};
+
+export default Button;
