@@ -7,19 +7,14 @@ import React from 'react';
 function CorrectPage() {
   return (
     <>
-      <Input text="이름" value="홍길동" disabled />
-      <Input text="부서" value="프론트 엔드" disabled />
-      <Input text="직책" value="사장" disabled />
-      <Input text="신청 날짜" value="2024/06" disabled />
+      <Input text="이름" value="홍길동" readOnly />
+      <Input text="부서" value="프론트 엔드" readOnly />
+      <Input text="직책" value="사장" readOnly />
+      <Input type="date" text="신청 날짜" value="2024-05-30" readOnly />
       <Input
         text="정정 날짜"
         description="정정 날짜를 선택해주세요"
         type="month"
-      />
-      <Input
-        text="정정 사유"
-        description="정정 사유를 선택해주세요"
-        placeholder="무급 휴가, 야근, 휴일 근무 등"
       />
       <Select
         text="정정 사유"
