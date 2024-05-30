@@ -11,7 +11,11 @@ function CorrectPage() {
       <Input text="부서" value="프론트 엔드" disabled />
       <Input text="직책" value="사장" disabled />
       <Input text="신청 날짜" value="2024/06" disabled />
-      <Input text="정정 날짜" description="정정 날짜를 선택해주세요" />
+      <Input
+        text="정정 날짜"
+        description="정정 날짜를 선택해주세요"
+        type="month"
+      />
       <Input
         text="정정 사유"
         description="정정 사유를 선택해주세요"

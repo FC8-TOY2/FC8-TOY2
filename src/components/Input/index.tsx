@@ -12,12 +12,9 @@ function Input({
   text,
   description,
   error,
-  width,
-  height,
-  placeholder,
-  value,
-  disabled,
-  type = 'text',
+  width = 'min-w-72',
+  height = 'min-h-12',
+  ...props
 }: InputProps) {
   return (
     <>
@@ -30,11 +27,8 @@ function Input({
         )}
       </div>
       <input
-        className={`text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300' : 'border-violet-200'} rounded-xl outline-none focus:border-violet-500 ${disabled && 'disabled:bg-white'}`}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        disabled={disabled}
+        className={`text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300' : 'border-violet-200'} rounded-xl outline-none focus:border-violet-500 ${'disabled:bg-white'}`}
+        {...props}
       />
       {error && (
         <span className="block text-sm font-bold text-red-300 ml-2">
@@ -44,13 +38,5 @@ function Input({
     </>
   );
 }
-
-Input.defaultProps = {
-  text: '',
-  description: '',
-  error: '',
-  width: 'w-72',
-  height: 'h-12',
-};
 
 export default Input;
