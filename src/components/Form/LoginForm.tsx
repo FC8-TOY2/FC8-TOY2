@@ -1,4 +1,4 @@
-import FormButtons from './Button';
+import Button from './Button';
 import FormContainer from './FormContainer';
 import TextInput from './TextInput';
 
@@ -19,7 +19,11 @@ function LoginForm() {
         placeholder="비밀번호를 입력해주세요"
         value=""
       />
-      <FormButtons />
+      <Button
+        backgroundColor="bg-violet-600 "
+        buttonInnerText="로그인"
+        textColor="text-white"
+      />
     </FormContainer>
   );
 }
