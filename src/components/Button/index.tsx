@@ -1,28 +1,15 @@
+import cn from '@/utils/cn';
 import React from 'react';
+import { VariantProps } from 'class-variance-authority';
+import buttonVariants from './buttonVariants';
 
-interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  buttonStyle?: 'default' | 'invert' | 'cancel';
-}
+interface ButtonProps
+  extends React.ComponentPropsWithoutRef<'button'>,
+    VariantProps<typeof buttonVariants> {}
 
-function Button({
-  buttonStyle = 'default',
-  type = 'button',
-  children,
-  ...props
-}: ButtonProps) {
-  let tailwind;
-  switch (buttonStyle) {
-    case 'invert':
-      tailwind =
-        'flex justify-center items-center bg-white font-bold text-violet-500 rounded-xl py-2.5 px-12 border border-violet-500';
-      break;
-    default:
-      tailwind =
-        'flex justify-center items-center bg-violet-500 font-bold text-white rounded-xl py-2.5 px-12';
-  }
-
+function Button({ intent, type = 'button', children, ...props }: ButtonProps) {
   return (
-    <button className={tailwind} type={type} {...props}>
+    <button className={cn(buttonVariants({ intent }))} type={type} {...props}>
       {children}
     </button>
   );

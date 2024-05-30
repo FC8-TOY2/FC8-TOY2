@@ -29,7 +29,7 @@ function CorrectPage() {
         placeholder="ex) 1000000"
       />
       <Button>정정 신청</Button>
-      <Button buttonStyle="invert">정정 취소</Button>
+      <Button intent="reverse">정정 취소</Button>
     </>
   );
 }
