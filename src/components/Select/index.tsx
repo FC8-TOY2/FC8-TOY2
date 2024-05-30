@@ -42,8 +42,9 @@ function Select<T extends Options>({
         {placeholder && (
           <option
             className="text-gray-400"
-            selected={!!selectedOption}
+            selected={!selectedOption}
             disabled
+            hidden
           >
             {placeholder}
           </option>
