@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  buttonStyle?: 'default' | 'invert';
+  buttonStyle?: 'default' | 'invert' | 'cancel';
 }
 
 function Button({

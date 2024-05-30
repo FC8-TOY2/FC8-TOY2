@@ -1,5 +1,7 @@
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import Select from '@/components/Select';
+import payStubOptions from '@/data/payStubOptions';
 import React from 'react';
 
 function CorrectPage() {
@@ -14,6 +16,12 @@ function CorrectPage() {
         text="정정 사유"
         description="정정 사유를 선택해주세요"
         placeholder="무급 휴가, 야근, 휴일 근무 등"
+      />
+      <Select
+        text="정정 사유"
+        description="정정 사유를 선택해주세요"
+        placeholder="아래 사유 중 하나를 선택해주세요"
+        options={payStubOptions}
       />
       <Input
         type="number"
