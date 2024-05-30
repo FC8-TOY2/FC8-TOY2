@@ -7,9 +7,19 @@ interface ButtonProps
   extends React.ComponentPropsWithoutRef<'button'>,
     VariantProps<typeof buttonVariants> {}
 
-function Button({ intent, type = 'button', children, ...props }: ButtonProps) {
+function Button({
+  intent,
+  className,
+  type = 'button',
+  children,
+  ...props
+}: ButtonProps) {
   return (
-    <button className={cn(buttonVariants({ intent }))} type={type} {...props}>
+    <button
+      className={cn(buttonVariants({ intent, className }))}
+      type={type}
+      {...props}
+    >
       {children}
     </button>
   );
