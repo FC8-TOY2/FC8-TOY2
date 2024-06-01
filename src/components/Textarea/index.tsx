@@ -32,7 +32,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
         </FlexBox>
         <textarea
-          className={`text-base font-medium ${width} ${height} px-3 py-2 border ${error ? 'border-red-300' : 'border-violet-200'} rounded-xl outline-none focus:border-violet-500 block`}
+          className={`text-base font-medium ${width} ${height} px-3 py-2 border ${error ? 'border-red-300 focus:border-red-300' : 'border-violet-200 focus:border-violet-500'} rounded-xl outline-none block`}
           ref={ref}
           {...props}
         />

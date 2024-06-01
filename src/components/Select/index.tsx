@@ -39,7 +39,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
         )}
       </FlexBox>
       <select
-        className={`text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300' : 'border-violet-200'} rounded-xl outline-none focus:border-violet-500`}
+        className={`text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300 focus:border-red-300' : 'border-violet-200 focus:border-violet-500'} rounded-xl outline-none`}
         ref={ref}
         {...props}
       >
