@@ -44,7 +44,7 @@ function PayStubCorrectForm({
   });
 
   const onSubmit = (data: unknown) => {
-    console.log(data);
+    console.log(JSON.stringify(data, null, 2));
   };
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import FlexBox from '../FlexBox';
 
 interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
@@ -9,14 +9,17 @@ interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
   height?: string;
 }
 
-function Input({
-  text,
-  description,
-  error,
-  width = 'min-w-72',
-  height = 'min-h-12',
-  ...props
-}: InputProps) {
+const Input = forwardRef<HTMLInputElement, InputProps>(function RefInput(
+  {
+    text,
+    description,
+    error,
+    width = 'min-w-72',
+    height = 'min-h-12',
+    ...props
+  },
+  ref,
+) {
   return (
     <div>
       <FlexBox xAlign="start">
@@ -29,6 +32,7 @@ function Input({
       </FlexBox>
       <input
         className={`text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300' : 'border-violet-200'} rounded-xl outline-none focus:border-violet-500`}
+        ref={ref}
         {...props}
       />
       {error && (
@@ -38,6 +42,6 @@ function Input({
       )}
     </div>
   );
-}
+});
 
 export default Input;
