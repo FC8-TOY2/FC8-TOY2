@@ -11,12 +11,15 @@ function FlexBox({
   xAlign,
   yAlign,
   direction,
+  gap,
   className,
   children,
 }: FlexBoxProps) {
   return (
     <div
-      className={cn(flexBoxVariants({ xAlign, yAlign, direction, className }))}
+      className={cn(
+        flexBoxVariants({ xAlign, yAlign, direction, gap, className }),
+      )}
     >
       {children}
     </div>

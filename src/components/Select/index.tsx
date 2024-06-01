@@ -27,8 +27,8 @@ function Select<T extends Options>({
   ...props
 }: SelectProps<T>) {
   return (
-    <>
-      <FlexBox className="w-fit" xAlign="start">
+    <div>
+      <FlexBox xAlign="start">
         {text && <span className="block text-sm font-bold ml-2">{text}</span>}
         {description && (
           <span className="block text-xs text-gray-400 font-bold ml-2">
@@ -58,7 +58,7 @@ function Select<T extends Options>({
           );
         })}
       </select>
-    </>
+    </div>
   );
 }
 
