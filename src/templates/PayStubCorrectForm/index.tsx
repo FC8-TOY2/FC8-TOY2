@@ -10,6 +10,7 @@ import Textarea from '@/components/Textarea';
 import FlexBox from '@/components/FlexBox';
 import { AiOutlineDollar } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 export interface PayStubCorrectFormProps {
   correctDate?: string;
@@ -44,7 +45,12 @@ function PayStubCorrectForm({
   });
 
   const onSubmit = (data: unknown) => {
-    console.log(JSON.stringify(data, null, 2));
+    try {
+      console.log(JSON.stringify(data, null, 2));
+      toast.success('정정 신청이 완료되었습니다.');
+    } catch (e) {
+      Object.values(errors).forEach((error) => toast.error(error.message));
+    }
   };
 
   return (
