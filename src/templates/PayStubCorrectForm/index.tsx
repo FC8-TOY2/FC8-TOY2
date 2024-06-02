@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import Textarea from '@/components/Textarea';
 import FlexBox from '@/components/FlexBox';
 import { AiOutlineDollar } from 'react-icons/ai';
-import { useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 export interface PayStubCorrectFormProps {
@@ -44,7 +44,7 @@ function PayStubCorrectForm({
     defaultValues: initialState,
   });
 
-  const onSubmit = (data: unknown) => {
+  const onSubmit: SubmitHandler<typeof initialState> = (data) => {
     try {
       console.log(JSON.stringify(data, null, 2));
       toast.success('정정 신청이 완료되었습니다.');
