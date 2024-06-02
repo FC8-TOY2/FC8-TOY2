@@ -25,6 +25,8 @@ function JoinForm() {
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordCheckClicked, setPasswordCheckClicked] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const setUserNameValue = (event: React.FormEvent<HTMLInputElement>) => {
     setInputValue(event, setUserName);
   };
@@ -67,7 +69,8 @@ function JoinForm() {
     return regEx.test(email);
   };
 
-  const onSubmitJoin = async () => {
+  const onSubmitJoin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const setErrorEmpty = () => {
       setNameError('');
       setPasswordError('');
@@ -95,6 +98,7 @@ function JoinForm() {
         setPasswordError('비밀번호 확인버튼을 눌러주세요');
         break;
       default:
+        setLoading(true);
         setErrorEmpty();
         try {
           const credentials = await createUserWithEmailAndPassword(
@@ -117,17 +121,27 @@ function JoinForm() {
           });
         } catch (error) {
           if (error instanceof FirebaseError) {
-            toast.error('다시 시도 해 주세요');
+            toast.error('이메일과 비밀번호를 다시 확인해주세요!', {
+              position: 'top-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+              transition: Bounce,
+            });
           }
         } finally {
-          toast.success('끝!');
+          setLoading(false);
         }
     }
-    return console.log('Rmt!');
   };
 
   return (
     <FormContainer onSubmit={onSubmitJoin}>
+      {loading ? <h1>로딩중</h1> : <>회원정보를 입력해주세요</>}
       <TextInput
         label="이름"
         type="text"
