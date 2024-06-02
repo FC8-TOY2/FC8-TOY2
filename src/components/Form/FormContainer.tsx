@@ -1,11 +1,24 @@
-import { ReactNode } from 'react';
+import React, { ReactNode, FormEvent } from 'react';
 
 interface FormContainerProps {
   children: ReactNode;
+  onSubmit?: () => Promise<void>;
 }
 
-function FormContainer({ children }: FormContainerProps) {
-  return <form className="w-full p-4 flex flex-col gap-4">{children}</form>;
-}
+export default function FormContainer({
+  children,
+  onSubmit,
+}: FormContainerProps) {
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    if (onSubmit) {
+      onSubmit();
+    }
+  };
 
-export default FormContainer;
+  return (
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      {children}
+    </form>
+  );
+}
