@@ -1,34 +1,28 @@
 interface ButtonProps {
+  type?: string;
   backgroundColor?: string;
   borderColor?: string;
   buttonInnerText: string;
   textColor?: string;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent) => void;
+  onSubmit?: (event: React.FormEvent<HTMLButtonElement>) => void;
 }
 
-function Button({
+export default function Button({
+  type,
   backgroundColor,
   borderColor,
   buttonInnerText,
   textColor,
-  onClick,
+  ...props
 }: ButtonProps) {
   return (
     <button
-      onClick={onClick}
-      type="button"
+      type={type}
       className={`${backgroundColor} ${borderColor} ${textColor} border rounded-xl py-2`}
+      {...props}
     >
       {buttonInnerText}
     </button>
   );
 }
-
-Button.defaultProps = {
-  backgroundColor: 'bg-white',
-  borderColor: 'border-violet-400',
-  textColor: 'text-black',
-  onClick: null,
-};
-
-export default Button;
