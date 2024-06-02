@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import ClientProvider from './ClientProvider';
 
 const pretendard = localFont({
   src: [
@@ -45,7 +46,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={pretendard.className}>{children}</body>
+      <body className={pretendard.className}>
+        <ClientProvider>{children}</ClientProvider>
+      </body>
     </html>
   );
 }
