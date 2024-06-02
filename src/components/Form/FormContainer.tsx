@@ -2,17 +2,17 @@ import React, { ReactNode, FormEvent } from 'react';
 
 interface FormContainerProps {
   children: ReactNode;
-  onSubmit?: () => Promise<void>;
+  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export default function FormContainer({
   children,
   onSubmit,
 }: FormContainerProps) {
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (onSubmit) {
-      onSubmit();
+      onSubmit(event);
     }
   };
 
