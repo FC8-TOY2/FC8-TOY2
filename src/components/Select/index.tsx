@@ -39,23 +39,19 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
         )}
       </FlexBox>
       <select
-        className={`text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300 focus:border-red-300' : 'border-violet-200 focus:border-violet-500'} rounded-xl outline-none`}
+        className={`text-gray-400 focus:text-black text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300 focus:border-red-300' : 'border-violet-200 focus:border-violet-500'} rounded-xl outline-none`}
         ref={ref}
+        defaultValue={selectedOption || 'placeholder'}
         {...props}
       >
         {placeholder && (
-          <option
-            className="text-gray-400"
-            selected={!selectedOption}
-            disabled
-            hidden
-          >
+          <option value="" disabled hidden>
             {placeholder}
           </option>
         )}
         {options.map(({ key, option }) => {
           return (
-            <option key={key} value={key} selected={option === selectedOption}>
+            <option key={key} value={key}>
               {option}
             </option>
           );

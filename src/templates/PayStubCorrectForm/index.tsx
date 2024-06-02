@@ -91,6 +91,11 @@ function PayStubCorrectForm({
             required: '정정 사유를 선택해주세요',
           })}
           error={errors.correctReason?.message}
+          onChange={(event) => {
+            if (event.target.value)
+              event.target.classList.remove('text-gray-400');
+            else event.target.classList.add('text-gray-400');
+          }}
         />
         <Input
           type="number"
