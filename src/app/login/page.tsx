@@ -11,8 +11,8 @@ function LoginPage() {
     router.push('/join');
   };
   return (
-    <div className="w-1/2 bg-slate-50 border border-violet-400 flex flex-col items-center justify-center rounded-xl">
-      <h2 className="font-semibold">로그인</h2>
+    <div className="w-1/2 bg-slate-50 border border-violet-400 flex flex-col selection:justify-center rounded-xl p-4">
+      <h2 className="font-semibold text-center">로그인</h2>
       <LoginForm />
       <div className="my-3 flex flex-col">
         <span className="text-center ">처음 방문 이신가요?</span>

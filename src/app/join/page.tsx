@@ -12,8 +12,8 @@ function JoinPage() {
   };
 
   return (
-    <div className="w-1/2 bg-slate-50 border border-violet-400 flex flex-col items-center justify-center rounded-xl">
-      <h2 className="font-semibold">회원가입</h2>
+    <div className="w-1/2 bg-slate-50 border border-violet-400 flex flex-col justify-center p-4 rounded-xl">
+      <h2 className="font-semibold text-center">회원가입</h2>
       <JoinForm />
       <div className="my-3 flex flex-col">
         <span className="text-center ">이미 회원가입하셨나요 ?</span>
