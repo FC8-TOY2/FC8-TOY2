@@ -9,31 +9,42 @@ import { useRouter } from 'next/navigation';
 import Textarea from '@/components/Textarea';
 import FlexBox from '@/components/FlexBox';
 import { AiOutlineDollar } from 'react-icons/ai';
-import { type SubmitHandler, useForm } from 'react-hook-form';
+import { type SubmitHandler, useForm, type FieldErrors } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { getCurrentDateInKorea } from '@/utils/time';
+import {
+  addPayStubCorrection,
+  updatePayStubCorrection,
+  type PayStubCorrection,
+} from '@/db/payStubCorrection';
 
 export interface PayStubCorrectFormProps {
   correctDate?: string;
   correctReason?: string;
+  id?: string;
+  initialData?: PayStubCorrection;
 }
 
 function PayStubCorrectForm({
   correctDate,
   correctReason,
+  id,
+  initialData,
 }: PayStubCorrectFormProps) {
   const router = useRouter();
   const initialState = useMemo(
-    () => ({
-      name: '홍길동',
-      dept: '프론트 엔드',
-      position: '사장',
-      requestDate: '2024-05-30',
-      correctDate: correctDate || '',
-      correctReason: correctReason || '',
-      correctPay: '',
-      detail: '',
-    }),
-    [correctDate, correctReason],
+    () =>
+      initialData || {
+        name: '홍길동',
+        dept: '프론트 엔드',
+        position: '사장',
+        requestDate: getCurrentDateInKorea(),
+        correctDate: correctDate || '',
+        correctReason: correctReason || '',
+        correctPay: '',
+        detail: '',
+      },
+    [initialData, correctDate, correctReason],
   );
 
   const {
@@ -44,13 +55,25 @@ function PayStubCorrectForm({
     defaultValues: initialState,
   });
 
-  const onSubmit: SubmitHandler<typeof initialState> = (data) => {
+  const onSubmit: SubmitHandler<typeof initialState> = async (data) => {
     try {
-      console.log(JSON.stringify(data, null, 2));
-      toast.success('정정 신청이 완료되었습니다.');
-    } catch (e) {
-      Object.values(errors).forEach((error) => toast.error(error.message));
+      if (id) {
+        const response = await updatePayStubCorrection(data, id);
+        toast.success(response.message);
+      } else {
+        const response = await addPayStubCorrection(data);
+        toast.success(response.message);
+      }
+      setTimeout(() => {
+        router.back();
+      }, 2000);
+    } catch (error) {
+      toast.error('정정 신청에 실패했습니다.');
     }
+  };
+
+  const onError = (onErrors: FieldErrors<PayStubCorrection>) => {
+    Object.values(onErrors).forEach((error) => toast.error(error?.message));
   };
 
   return (
@@ -61,7 +84,7 @@ function PayStubCorrectForm({
       </FlexBox>
       <form
         className="max-w-5xl h-[48rem] border border-violet-300 rounded-xl"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit, onError)}
       >
         <Input text="이름" value="홍길동" readOnly {...register('name')} />
         <Input text="부서" value="프론트 엔드" readOnly {...register('dept')} />
