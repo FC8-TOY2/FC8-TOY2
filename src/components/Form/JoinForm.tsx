@@ -13,8 +13,9 @@ import setInputValue from './setValue';
 
 function JoinForm() {
   const router = useRouter();
-
+  // todo : 이름 , 직책, 부서, uId >  리코일
   const [userName, setUserName] = useState('');
+
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
 
