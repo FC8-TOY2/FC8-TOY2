@@ -8,6 +8,7 @@ interface FlexBoxProps
     VariantProps<typeof flexBoxVariants> {}
 
 function FlexBox({
+  width,
   xAlign,
   yAlign,
   direction,
@@ -18,7 +19,7 @@ function FlexBox({
   return (
     <div
       className={cn(
-        flexBoxVariants({ xAlign, yAlign, direction, gap, className }),
+        flexBoxVariants({ width, xAlign, yAlign, direction, gap, className }),
       )}
     >
       {children}

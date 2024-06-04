@@ -1,23 +1,19 @@
 import React, { forwardRef } from 'react';
+import { VariantProps } from 'class-variance-authority';
+import cn from '@/utils/cn';
 import FlexBox from '../FlexBox';
+import inputVariants from './inputVariants';
 
-interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
+interface InputProps
+  extends React.ComponentPropsWithoutRef<'input'>,
+    VariantProps<typeof inputVariants> {
   text?: string;
   description?: string;
   error?: string;
-  width?: string;
-  height?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(function RefInput(
-  {
-    text,
-    description,
-    error,
-    width = 'min-w-72',
-    height = 'min-h-12',
-    ...props
-  },
+  { text, description, error, border, className, ...props },
   ref,
 ) {
   return (
@@ -31,7 +27,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function RefInput(
         )}
       </FlexBox>
       <input
-        className={`text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300 focus:border-red-300' : 'border-violet-200 focus:border-violet-500'} rounded-xl outline-none`}
+        className={cn(inputVariants({ border, className }))}
         ref={ref}
         {...props}
       />

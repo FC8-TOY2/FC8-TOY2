@@ -43,7 +43,6 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
         )}
       </FlexBox>
       <select
-        // className={`text-gray-400 focus:text-black text-base font-medium ${width} ${height} px-3 border ${error ? 'border-red-300 focus:border-red-300' : 'border-violet-200 focus:border-violet-500'} rounded-xl outline-none`}
         className={cn(selectVariants({ font, border, className }))}
         ref={ref}
         defaultValue={selectedOption || ''}

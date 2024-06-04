@@ -105,6 +105,7 @@ function PayStubCorrectForm({
             required: '정정 날짜를 선택해주세요',
           })}
           error={errors.correctDate?.message}
+          border={errors.correctReason ? 'error' : 'default'}
         />
         <Select
           text="정정 사유"
@@ -115,8 +116,8 @@ function PayStubCorrectForm({
             required: '정정 사유를 선택해주세요',
           })}
           font={watch('correctReason') ? 'value' : 'placeholder'}
-          border={errors.correctReason ? 'error' : 'default'}
           error={errors.correctReason?.message}
+          border={errors.correctReason ? 'error' : 'default'}
         />
         <Input
           type="number"
@@ -127,6 +128,7 @@ function PayStubCorrectForm({
             required: '정정 액수를 입력해주세요',
           })}
           error={errors.correctPay?.message}
+          border={errors.correctReason ? 'error' : 'default'}
         />
         <Textarea
           text="세부 내용"
