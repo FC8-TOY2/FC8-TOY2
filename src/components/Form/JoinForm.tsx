@@ -2,24 +2,43 @@
 
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
-import { auth } from '@/db/firebase';
+import { auth, dataBase, storage } from '@/db/firebase';
 import { useState } from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { useRecoilState } from 'recoil';
+import {
+  deptState,
+  jobPositionState,
+  profilePhotoState,
+  userNameState,
+} from '@/recoil/atom';
+import { doc, setDoc } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import Button from './Button';
 import FormContainer from './FormContainer';
 import TextInput from './TextInput';
 import setInputValue from './setValue';
+import validateEmail from './validateEmail';
 
 function JoinForm() {
   const router = useRouter();
-  // todo : 이름 , 직책, 부서, uId >  리코일
-  const [userName, setUserName] = useState('');
+
+  const [userName, setUserName] = useRecoilState(userNameState);
+  const [jobPosition, setJobPosition] = useRecoilState(jobPositionState);
+  const [dept, setDept] = useRecoilState(deptState);
+
+  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+  const [profilePhotoURL, setProfilePhotoURL] =
+    useRecoilState(profilePhotoState);
 
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [nameError, setNameError] = useState('');
+  const [jobPositionError, setJobPositionError] = useState('');
+  const [deptError, setDeptError] = useState('');
+
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
@@ -30,6 +49,14 @@ function JoinForm() {
 
   const setUserNameValue = (event: React.FormEvent<HTMLInputElement>) => {
     setInputValue(event, setUserName);
+  };
+
+  const setJobPositionValue = (event: React.FormEvent<HTMLInputElement>) => {
+    setInputValue(event, setJobPosition);
+  };
+
+  const setDeptValue = (event: React.FormEvent<HTMLInputElement>) => {
+    setInputValue(event, setDept);
   };
 
   const setEmailValue = (event: React.FormEvent<HTMLInputElement>) => {
@@ -65,15 +92,28 @@ function JoinForm() {
     }
   };
 
-  const validateEmail = (email: string) => {
-    const regEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regEx.test(email);
+  const handleProfilePhotoChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0] || null;
+    setProfilePhoto(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePhotoURL(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setProfilePhotoURL(null);
+    }
   };
 
   const onSubmitJoin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const setErrorEmpty = () => {
       setNameError('');
+      setJobPositionError('');
+      setDeptError('');
       setPasswordError('');
       setEmailError('');
     };
@@ -81,6 +121,14 @@ function JoinForm() {
       case userName === '':
         setErrorEmpty();
         setNameError('유저이름을 입력해주세요');
+        break;
+      case jobPosition === '':
+        setErrorEmpty();
+        setJobPositionError('직책을 입력해주세요');
+        break;
+      case dept === '':
+        setErrorEmpty();
+        setDeptError('부서를 입력 해주세요');
         break;
       case userEmail === '':
         setErrorEmpty();
@@ -108,6 +156,25 @@ function JoinForm() {
             password,
           );
           await updateProfile(credentials.user, { displayName: userName });
+
+          const userDoc = {
+            userName,
+            jobPosition,
+            dept,
+            email: userEmail,
+          };
+
+          await setDoc(doc(dataBase, 'users', credentials.user.uid), userDoc);
+
+          if (profilePhoto) {
+            const profilePhotoRef = ref(
+              storage,
+              `profilePhotos/${credentials.user.uid}`,
+            );
+            await uploadBytes(profilePhotoRef, profilePhoto);
+            const photoURL = await getDownloadURL(profilePhotoRef);
+            await updateProfile(credentials.user, { photoURL });
+          }
           toast.success('회원가입이 완료 되었습니다', {
             position: 'top-center',
             autoClose: 5000,
@@ -152,7 +219,24 @@ function JoinForm() {
         onChange={setUserNameValue}
         error={nameError}
       />
-
+      <TextInput
+        label="직책"
+        type="text"
+        name="jopPosition"
+        placeholder="직책을 입력해주세요"
+        value={jobPosition}
+        onChange={setJobPositionValue}
+        error={jobPositionError}
+      />
+      <TextInput
+        label="부서"
+        type="text"
+        name="dept"
+        placeholder="부서를 입력해주세요"
+        value={dept}
+        onChange={setDeptValue}
+        error={deptError}
+      />
       <TextInput
         label="이메일"
         type="text"
@@ -162,6 +246,21 @@ function JoinForm() {
         onChange={setEmailValue}
         error={emailError}
       />
+      <TextInput
+        label="프로필 사진"
+        type="file"
+        name="profilePhoto"
+        placeholder="프로필사진을 올려주세요"
+        onChange={handleProfilePhotoChange}
+      />
+
+      {profilePhotoURL && (
+        <img
+          src={profilePhotoURL}
+          alt="프로필 미리보기"
+          className="w-32 h-32 rounded-full mt-4 shadow-2xl"
+        />
+      )}
 
       <TextInput
         label="비밀번호"
