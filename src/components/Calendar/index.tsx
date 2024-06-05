@@ -2,81 +2,65 @@
 
 import Calendar from '@toast-ui/react-calendar';
 import './toastui-calendar.min.css';
+import './tui-date-picker.min.css';
+import './tui-time-picker.min.css';
 
-import React from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 
 function ScheduleCalendar() {
-  const calendars = [{ id: 'cal1', name: 'Personal' }];
+  const calendarRef = useRef<typeof Calendar>(null);
+  const calendars = useMemo(
+    () => [
+      {
+        id: 'red',
+        name: 'RED',
+        color: '#ffffff',
+        backgroundColor: '#ff4040',
+        borderColor: 'transparent',
+      },
+      {
+        id: 'yellow',
+        name: 'YELLOW',
+        color: '#ffffff',
+        backgroundColor: '#FACC15',
+        borderColor: 'transparent',
+      },
+      {
+        id: 'blue',
+        name: 'BLUE',
+        color: '#ffffff',
+        backgroundColor: '#00a9ff',
+        borderColor: 'transparent',
+      },
+      {
+        id: 'green',
+        name: 'GREEN',
+        color: '#ffffff',
+        backgroundColor: '#03bd9e',
+        borderColor: 'transparent',
+      },
+      {
+        id: 'violet',
+        name: 'VIOLET',
+        color: '#ffffff',
+        backgroundColor: '#9e5fff',
+        borderColor: 'transparent',
+      },
+    ],
+    [],
+  );
   const initialEvents = [
     {
       id: '1',
-      calendarId: 'cal1',
+      calendarId: 'red',
       title: 'Lunch',
       category: 'time',
       start: '2024-06-28T12:00:00',
       end: '2024-06-28T13:30:00',
-      backgroundColor: 'red',
     },
     {
       id: '2',
-      calendarId: 'cal1',
-      title: 'Coffee Break',
-      category: 'time',
-      start: '2024-06-10T15:00:00',
-      end: '2024-06-28T15:30:00',
-      backgroundColor: 'red',
-    },
-    {
-      id: '3',
-      calendarId: 'cal1',
-      title: 'Coffee Break',
-      category: 'time',
-      start: '2024-06-10T15:00:00',
-      end: '2024-06-28T15:30:00',
-    },
-    {
-      id: '4',
-      calendarId: 'cal1',
-      title: 'Coffee Break',
-      category: 'time',
-      start: '2024-06-10T15:00:00',
-      end: '2024-06-28T15:30:00',
-    },
-    {
-      id: '5',
-      calendarId: 'cal1',
-      title: 'Coffee Break',
-      category: 'time',
-      start: '2024-06-10T15:00:00',
-      end: '2024-06-28T15:30:00',
-    },
-    {
-      id: '6',
-      calendarId: 'cal1',
-      title: 'Coffee Break',
-      category: 'time',
-      start: '2024-06-10T15:00:00',
-      end: '2024-06-28T15:30:00',
-    },
-    {
-      id: '7',
-      calendarId: 'cal1',
-      title: 'Coffee Break',
-      category: 'time',
-      start: '2024-06-10T15:00:00',
-      end: '2024-06-28T15:30:00',
-    },
-    {
-      id: '8',
-      calendarId: 'cal1',
-      title: 'Coffee Break',
-      category: 'time',
-      start: '2024-06-10T15:00:00',
-      end: '2024-06-28T15:30:00',
-    },
-    {
-      id: '9',
-      calendarId: 'cal1',
+      calendarId: 'blue',
       title: 'Coffee Break',
       category: 'time',
       start: '2024-06-10T15:00:00',
@@ -84,14 +68,53 @@ function ScheduleCalendar() {
     },
   ];
 
-  const onAfterRenderEvent = (event) => {
-    console.log(event.title);
+  const getCalInstance = useCallback(
+    () => calendarRef.current?.getInstance?.(),
+    [],
+  );
+
+  const onBeforeCreateEvent = (eventData) => {
+    const event = {
+      calendarId: eventData.calendarId,
+      id: String(Math.random()),
+      title: eventData.title,
+      isAllday: eventData.isAllday,
+      start: eventData.start,
+      end: eventData.end,
+      category: eventData.isAllday ? 'allday' : 'time',
+      location: eventData.location,
+      state: eventData.state,
+      isPrivate: eventData.isPrivate,
+      attendees: ['나'],
+    };
+
+    getCalInstance().createEvents([event]);
+  };
+
+  const onBeforeDeleteEvent = (eventData) => {
+    const { id, calendarId } = eventData;
+
+    getCalInstance().deleteEvent(id, calendarId);
+  };
+
+  // const onBeforeUpdateEvent: ExternalEventTypes['beforeUpdateEvent'] = (
+  const onBeforeUpdateEvent = (updateData) => {
+    const targetEvent = updateData.event;
+    const changes = { ...updateData.changes };
+
+    getCalInstance().updateEvent(
+      targetEvent.id,
+      targetEvent.calendarId,
+      changes,
+    );
   };
 
   return (
     <Calendar
-      height="900px"
+      ref={calendarRef}
+      height="600px"
       view="month"
+      useFormPopup
       useDetailPopup
       usageStatistics={false}
       // eventFilter={(event) => event.isVisible}
@@ -100,7 +123,7 @@ function ScheduleCalendar() {
         isAlways6Weeks: false,
       }}
       gridSelection={{
-        enableDblClick: false,
+        enableDblClick: true,
         enableClick: false,
       }}
       theme={{
@@ -121,12 +144,12 @@ function ScheduleCalendar() {
           weekend: {
             backgroundColor: '#FEF2F2',
           },
+          gridCell: {
+            headerHeight: 35,
+          },
         },
       }}
       template={{
-        milestone(event) {
-          return `<span style="color: #fff; background-color: ${event.backgroundColor};">${event.title}</span>`;
-        },
         monthMoreClose() {
           return '<div style="font-size: 1rem; margin-top: 0.25rem">X</div>';
         },
@@ -139,7 +162,9 @@ function ScheduleCalendar() {
       }}
       calendars={calendars}
       events={initialEvents}
-      onAfterRenderEvent={onAfterRenderEvent}
+      onBeforeCreateEvent={onBeforeCreateEvent}
+      onBeforeDeleteEvent={onBeforeDeleteEvent}
+      onBeforeUpdateEvent={onBeforeUpdateEvent}
     />
   );
 }
