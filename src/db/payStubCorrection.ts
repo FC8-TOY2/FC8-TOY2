@@ -1,4 +1,13 @@
-import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import {
+  type DocumentData,
+  type QuerySnapshot,
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore';
 import { dataBase } from './firebase';
 
 export interface PayStubCorrection {
@@ -72,22 +81,44 @@ export async function updatePayStubCorrection(
 
 export async function getPayStubCorrection(
   id: string,
-): Promise<{ payStubCorrection?: PayStubCorrection; error?: string }> {
+): Promise<{ payStubCorrection: PayStubCorrection } | { error: string }> {
   const userId = 'hha8HhDxIDxf3hX7QulJ';
-  const payStubCorrectionsRef = doc(
+  const payStubCorrectionRef = doc(
     dataBase,
     'payStubCorrections',
     userId,
     'payStubCorrectionList',
     id,
   );
-  const payStubCorrectionsSnap = await getDoc(payStubCorrectionsRef);
+  const payStubCorrectionSnap = await getDoc(payStubCorrectionRef);
 
-  if (!payStubCorrectionsSnap.exists()) {
-    return { error: '급여 내역 정정 신청 목록에 접근에 실패했습니다.' };
+  if (!payStubCorrectionSnap.exists()) {
+    return { error: '급여 내역 정정 신청 목록에 접근 실패했습니다.' };
   }
 
   return {
-    payStubCorrection: payStubCorrectionsSnap.data() as PayStubCorrection,
+    payStubCorrection: payStubCorrectionSnap.data() as PayStubCorrection,
+  };
+}
+
+export async function getPayStubCorrections(): Promise<
+  | { payStubCorrections: QuerySnapshot<DocumentData, DocumentData> }
+  | { error: string }
+> {
+  const userId = 'hha8HhDxIDxf3hX7QulJ';
+  const payStubCorrectionsRef = collection(
+    dataBase,
+    'payStubCorrections',
+    userId,
+    'payStubCorrectionList',
+  );
+  const payStubCorrectionsSnap = await getDocs(payStubCorrectionsRef);
+
+  if (!payStubCorrectionsSnap) {
+    return { error: '급여 내역 정정 신청 목록에 접근 실패했습니다.' };
+  }
+
+  return {
+    payStubCorrections: payStubCorrectionsSnap || [],
   };
 }
