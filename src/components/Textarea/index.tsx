@@ -1,7 +1,12 @@
 import React, { forwardRef } from 'react';
+import { VariantProps } from 'class-variance-authority';
+import cn from '@/utils/cn';
 import FlexBox from '../FlexBox';
+import textareaVariants from './textareaVariants';
 
-interface TextareaProps extends React.ComponentPropsWithoutRef<'textarea'> {
+interface TextareaProps
+  extends React.ComponentPropsWithoutRef<'textarea'>,
+    VariantProps<typeof textareaVariants> {
   text?: string;
   description?: string;
   error?: string;
@@ -11,14 +16,7 @@ interface TextareaProps extends React.ComponentPropsWithoutRef<'textarea'> {
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   function RefTextarea(
-    {
-      text,
-      description,
-      error,
-      width = 'min-w-[57rem]',
-      height = 'min-h-40',
-      ...props
-    },
+    { text, description, error, state, className, ...props },
     ref,
   ) {
     return (
@@ -32,7 +30,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
         </FlexBox>
         <textarea
-          className={`text-base font-medium ${width} ${height} px-3 py-2 border ${error ? 'border-red-300 focus:border-red-300' : 'border-violet-200 focus:border-violet-500'} rounded-xl outline-none block`}
+          className={cn(textareaVariants({ state, className }))}
           ref={ref}
           {...props}
         />

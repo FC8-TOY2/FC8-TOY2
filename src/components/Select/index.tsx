@@ -26,7 +26,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
     options,
     selectedOption,
     font,
-    border,
+    state,
     className,
     ...props
   },
@@ -43,7 +43,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
         )}
       </FlexBox>
       <select
-        className={cn(selectVariants({ font, border, className }))}
+        className={cn(selectVariants({ font, state, className }))}
         ref={ref}
         defaultValue={selectedOption || ''}
         {...props}

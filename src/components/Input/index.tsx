@@ -13,7 +13,7 @@ interface InputProps
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(function RefInput(
-  { text, description, error, border, className, ...props },
+  { text, description, error, state, className, ...props },
   ref,
 ) {
   return (
@@ -27,7 +27,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function RefInput(
         )}
       </FlexBox>
       <input
-        className={cn(inputVariants({ border, className }))}
+        className={cn(inputVariants({ state, className }))}
         ref={ref}
         {...props}
       />

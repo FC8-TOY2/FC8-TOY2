@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
-const inputVariants = cva(
-  'text-base font-medium min-w-72 min-h-12 px-3 border rounded-xl outline-none',
+const textareaVariants = cva(
+  'text-base font-medium min-w-[57rem] min-h-40 px-3 py-2 border rounded-xl outline-none block',
   {
     variants: {
       state: {
@@ -15,4 +15,4 @@ const inputVariants = cva(
   },
 );
 
-export default inputVariants;
+export default textareaVariants;

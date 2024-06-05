@@ -8,14 +8,14 @@ const selectVariants = cva(
         value: 'text-black focus:text-black',
         placeholder: 'text-gray-400 focus:text-gray-400',
       },
-      border: {
-        default: 'border-violet-200 focus:border-violet-500',
-        error: 'border-red-300 focus:border-red-300',
+      state: {
+        default: 'border-violet-200 focus:border-violet-500 mb-5',
+        error: 'border-red-300 focus:border-red-300 mb-0',
       },
     },
     defaultVariants: {
       font: 'value',
-      border: 'default',
+      state: 'default',
     },
   },
 );
