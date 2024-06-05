@@ -79,7 +79,7 @@ function PayStubCorrectForm({
 
   return (
     <>
-      <FlexBox>
+      <FlexBox className="mb-1">
         <AiOutlineDollar size="1.5rem" />
         <div className="text-2xl font-bold ml-1">급여 내역 정정 신청</div>
       </FlexBox>
