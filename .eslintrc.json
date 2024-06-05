@@ -19,7 +19,11 @@
     ],
     "semi": ["error", "always"],
     "quotes": ["error", "single"],
-    "react/react-in-jsx-scope": "off" // React 17+ JSX 변환을 사용하기 때문에 비활성화
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/button-has-type": "off",
+    "react/jsx-no-useless-fragment": "off"
   },
   "settings": {
     "react": {

@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import AuthProvider from '@/components/Provider/AuthProvider';
+import ToastProvider from '@/components/Provider/ToastProvider';
+import RecoilProvider from '@/components/Provider/RecoilProvider';
 
 const pretendard = localFont({
   src: [
@@ -45,7 +48,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={pretendard.className}>{children}</body>
+      <body className={pretendard.className}>
+        <RecoilProvider>
+          <AuthProvider>
+            <ToastProvider>{children}</ToastProvider>
+          </AuthProvider>
+        </RecoilProvider>
+      </body>
     </html>
   );
 }
