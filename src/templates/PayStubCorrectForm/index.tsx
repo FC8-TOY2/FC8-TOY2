@@ -60,14 +60,11 @@ function PayStubCorrectForm({
     try {
       if (id) {
         const response = await updatePayStubCorrection(data, id);
-        toast.success(response.message);
+        toast.success(response.message, { onClose: () => router.back() });
       } else {
         const response = await addPayStubCorrection(data);
-        toast.success(response.message);
+        toast.success(response.message, { onClose: () => router.back() });
       }
-      setTimeout(() => {
-        router.back();
-      }, 2000);
     } catch (error) {
       toast.error('정정 신청에 실패했습니다.');
     }
