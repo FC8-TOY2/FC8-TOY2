@@ -1,8 +1,8 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Slide, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 interface ToastProviderProps {
   children: ReactNode;
@@ -12,7 +12,13 @@ function ToastProvider({ children }: ToastProviderProps) {
   return (
     <>
       {children}
-      <ToastContainer />
+      <ToastContainer
+        autoClose={2000}
+        newestOnTop
+        closeOnClick={false}
+        draggable
+        transition={Slide}
+      />
     </>
   );
 }
