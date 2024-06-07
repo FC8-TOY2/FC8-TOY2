@@ -5,15 +5,8 @@ import { useRecoilValue } from 'recoil';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, dataBase } from '@/db/firebase';
 import { uIdState } from '@/recoil/atom';
+import { UserData } from '@/db/user';
 import UserDataDiv from './userData';
-
-export interface UserData {
-  userName: string;
-  dept: string;
-  email: string;
-  jobPosition: string;
-  photoURL?: string;
-}
 
 function MyPageInfo() {
   const uid = useRecoilValue(uIdState);

@@ -7,7 +7,8 @@ import { Bounce, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
 import { useSetRecoilState } from 'recoil';
-import { uIdState } from '@/recoil/atom';
+import { uIdState, userDataState } from '@/recoil/atom';
+import { getUserData } from '@/db/user';
 import Button from './Button';
 import FormContainer from './FormContainer';
 import TextInput from './TextInput';
@@ -17,6 +18,7 @@ import validateEmail from './validateEmail';
 function LoginForm() {
   const router = useRouter();
   const setUid = useSetRecoilState(uIdState);
+  const setUserData = useSetRecoilState(userDataState);
 
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -66,9 +68,12 @@ function LoginForm() {
           const { user } = userCredential;
           setUid(user.uid);
 
+          const response = await getUserData(user.uid);
+          if ('userData' in response) setUserData(response.userData);
+
           toast.success('로그인이 완료되었습니다!', {
             position: 'top-center',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -82,7 +87,7 @@ function LoginForm() {
           if (error instanceof FirebaseError) {
             toast.error('이메일과 비밀번호를 다시 확인해주세요!', {
               position: 'top-center',
-              autoClose: 5000,
+              autoClose: 2000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
