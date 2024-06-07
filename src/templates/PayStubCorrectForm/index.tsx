@@ -80,16 +80,7 @@ function PayStubCorrectForm({
         } else {
           const { payStubCorrection } = response;
 
-          reset({
-            name: payStubCorrection.name,
-            dept: payStubCorrection.dept,
-            position: payStubCorrection.position,
-            requestDate: payStubCorrection.requestDate,
-            correctDate: payStubCorrection.correctDate,
-            correctReason: payStubCorrection.correctReason,
-            correctPay: payStubCorrection.correctPay,
-            detail: payStubCorrection.detail,
-          });
+          reset(payStubCorrection);
         }
       };
       fetchPayStubCorrection();

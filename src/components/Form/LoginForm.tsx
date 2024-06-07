@@ -73,7 +73,7 @@ function LoginForm() {
 
           toast.success('로그인이 완료되었습니다!', {
             position: 'top-center',
-            autoClose: 5000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -87,7 +87,7 @@ function LoginForm() {
           if (error instanceof FirebaseError) {
             toast.error('이메일과 비밀번호를 다시 확인해주세요!', {
               position: 'top-center',
-              autoClose: 5000,
+              autoClose: 2000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
