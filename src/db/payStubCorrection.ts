@@ -22,11 +22,13 @@ export interface PayStubCorrection {
   detail: string;
 }
 
-export async function addPayStubCorrection(data: PayStubCorrection) {
+export async function addPayStubCorrection(
+  data: PayStubCorrection,
+  uid: string,
+) {
   try {
-    const userId = 'hha8HhDxIDxf3hX7QulJ';
     const payStubCorrectionsRef = collection(
-      doc(dataBase, 'payStubCorrections', userId),
+      doc(dataBase, 'payStubCorrections', uid),
       'payStubCorrectionList',
     );
 
@@ -40,33 +42,14 @@ export async function addPayStubCorrection(data: PayStubCorrection) {
 
 export async function updatePayStubCorrection(
   data: PayStubCorrection,
+  uid: string,
   id: string,
 ) {
-  // const auth = getAuth();
-
-  // onAuthStateChanged(auth, async (user) => {
-  //   if (!user) return { message: '유저를 찾을 수 없습니다.' };
-
-  //   const userId = user.uid;
-  //   const payStubCorrectionsRef = doc(
-  //     dataBase,
-  //     'payStubCorrections',
-  //     userId,
-  //     'payStubCorrectionList',
-  //     id,
-  //   );
-  //   const payStubCorrectionsSnap = await getDoc(payStubCorrectionsRef);
-
-  //   if (!payStubCorrectionsSnap)
-  //     return { error: '급여 내역 정정 신청 목록에 접근에 실패했습니다.' };
-  // });
-
   try {
-    const userId = 'hha8HhDxIDxf3hX7QulJ';
     const payStubCorrectionsRef = doc(
       dataBase,
       'payStubCorrections',
-      userId,
+      uid,
       'payStubCorrectionList',
       id,
     );
@@ -80,13 +63,13 @@ export async function updatePayStubCorrection(
 }
 
 export async function getPayStubCorrection(
+  uid: string,
   id: string,
 ): Promise<{ payStubCorrection: PayStubCorrection } | { error: string }> {
-  const userId = 'hha8HhDxIDxf3hX7QulJ';
   const payStubCorrectionRef = doc(
     dataBase,
     'payStubCorrections',
-    userId,
+    uid,
     'payStubCorrectionList',
     id,
   );
@@ -101,15 +84,16 @@ export async function getPayStubCorrection(
   };
 }
 
-export async function getPayStubCorrections(): Promise<
+export async function getPayStubCorrections(
+  uid: string,
+): Promise<
   | { payStubCorrections: QuerySnapshot<DocumentData, DocumentData> }
   | { error: string }
 > {
-  const userId = 'hha8HhDxIDxf3hX7QulJ';
   const payStubCorrectionsRef = collection(
     dataBase,
     'payStubCorrections',
-    userId,
+    uid,
     'payStubCorrectionList',
   );
   const payStubCorrectionsSnap = await getDocs(payStubCorrectionsRef);

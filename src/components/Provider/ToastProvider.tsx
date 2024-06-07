@@ -13,7 +13,7 @@ function ToastProvider({ children }: ToastProviderProps) {
     <>
       {children}
       <ToastContainer
-        autoClose={2000}
+        autoClose={1000}
         newestOnTop
         closeOnClick={false}
         draggable

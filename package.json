@@ -24,6 +24,7 @@
     "recoil": "^0.7.7",
     "tui-date-picker": "^4.3.3",
     "tui-time-picker": "^2.1.6",
+    "recoil-persist": "^5.1.0",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {

@@ -4,7 +4,7 @@ import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import payStubOptions from '@/data/payStubOptions';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Textarea from '@/components/Textarea';
 import FlexBox from '@/components/FlexBox';
@@ -14,37 +14,48 @@ import { toast } from 'react-toastify';
 import { getCurrentDateInKorea } from '@/utils/time';
 import {
   addPayStubCorrection,
+  getPayStubCorrection,
   updatePayStubCorrection,
   type PayStubCorrection,
 } from '@/db/payStubCorrection';
+import { useRecoilValue } from 'recoil';
+import { uIdState, userDataState } from '@/recoil/atom';
+import { isError } from '@/utils/typeGaurd';
 
 export interface PayStubCorrectFormProps {
   correctDate?: string;
   correctReason?: string;
   id?: string;
-  initialData?: PayStubCorrection;
 }
 
 function PayStubCorrectForm({
   correctDate,
   correctReason,
   id,
-  initialData,
 }: PayStubCorrectFormProps) {
   const router = useRouter();
-  const initialState = useMemo(
-    () =>
-      initialData || {
-        name: '홍길동',
-        dept: '프론트 엔드',
-        position: '사장',
-        requestDate: getCurrentDateInKorea(),
-        correctDate: correctDate || '',
-        correctReason: correctReason || '',
-        correctPay: '',
-        detail: '',
-      },
-    [initialData, correctDate, correctReason],
+  const uid = useRecoilValue(uIdState);
+
+  if (!uid) {
+    toast.error('유저를 찾을 수 없습니다.', {
+      onClose: () => router.back(),
+    });
+  }
+
+  const userData = useRecoilValue(userDataState);
+
+  const initialState = useMemo<PayStubCorrection>(
+    () => ({
+      name: userData?.userName || '',
+      dept: userData?.dept || '',
+      position: userData?.jobPosition || '',
+      requestDate: getCurrentDateInKorea(),
+      correctDate: correctDate || '',
+      correctReason: correctReason || '',
+      correctPay: '',
+      detail: '',
+    }),
+    [correctDate, correctReason, userData],
   );
 
   const {
@@ -52,17 +63,47 @@ function PayStubCorrectForm({
     register,
     watch,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: initialState,
   });
 
+  useEffect(() => {
+    if (id) {
+      const fetchPayStubCorrection = async () => {
+        const response = await getPayStubCorrection(uid, id);
+
+        if (isError(response)) {
+          toast.error(response.error, {
+            onClose: () => router.back(),
+          });
+        } else {
+          const { payStubCorrection } = response;
+
+          reset({
+            name: payStubCorrection.name,
+            dept: payStubCorrection.dept,
+            position: payStubCorrection.position,
+            requestDate: payStubCorrection.requestDate,
+            correctDate: payStubCorrection.correctDate,
+            correctReason: payStubCorrection.correctReason,
+            correctPay: payStubCorrection.correctPay,
+            detail: payStubCorrection.detail,
+          });
+        }
+      };
+      fetchPayStubCorrection();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uid, id]);
+
   const onSubmit: SubmitHandler<typeof initialState> = async (data) => {
     try {
       if (id) {
-        const response = await updatePayStubCorrection(data, id);
+        const response = await updatePayStubCorrection(data, uid, id);
         toast.success(response.message, { onClose: () => router.back() });
       } else {
-        const response = await addPayStubCorrection(data);
+        const response = await addPayStubCorrection(data, uid);
         toast.success(response.message, { onClose: () => router.back() });
       }
     } catch (error) {
@@ -86,16 +127,21 @@ function PayStubCorrectForm({
           onSubmit={handleSubmit(onSubmit, onError)}
         >
           <FlexBox gap="oneHalf">
-            <Input text="이름" value="홍길동" readOnly {...register('name')} />
+            <Input
+              text="이름"
+              value={initialState.name}
+              readOnly
+              {...register('name')}
+            />
             <Input
               text="부서"
-              value="프론트 엔드"
+              value={initialState.dept}
               readOnly
               {...register('dept')}
             />
             <Input
               text="직책"
-              value="사장"
+              value={initialState.position}
               readOnly
               {...register('position')}
             />
@@ -103,7 +149,6 @@ function PayStubCorrectForm({
           <Input
             type="date"
             text="신청 날짜"
-            value="2024-05-30"
             readOnly
             {...register('requestDate')}
           />
