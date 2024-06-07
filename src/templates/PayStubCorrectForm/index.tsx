@@ -85,8 +85,7 @@ function PayStubCorrectForm({
       };
       fetchPayStubCorrection();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uid, id]);
+  }, [uid, id, router, reset]);
 
   const onSubmit: SubmitHandler<typeof initialState> = async (data) => {
     try {
