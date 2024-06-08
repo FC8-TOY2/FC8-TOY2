@@ -28,7 +28,6 @@ const ItemHead: React.FC<ItemHeadProps> = ({ tableType }) => {
           <li className="flex-[4] p-1">내용</li>
           <li className="flex-[2] p-1">상태</li>
           <li className="flex-[1] p-1">수정</li>
-          <li className="flex-[1] p-1">삭제</li>
         </ul>
       </li>
     );
