@@ -14,7 +14,7 @@ const index = () => {
   const setUserData = useSetRecoilState(userDataState);
   const router = useRouter()
 
-  const handleSubmit = useCallback(async () => {
+  const handleLogOut = useCallback(async () => {
     try {
       const auth = getAuth()
       await signOut(auth)
@@ -34,7 +34,7 @@ const index = () => {
         <img src="/images/logo.png" alt="logo" />
       </Link>
       <div className="flex">
-        <button type="button" onClick={handleSubmit} className="mr-4 text-sm text-gray-400">
+        <button type="button" onClick={handleLogOut} className="mr-4 text-sm text-gray-400">
           로그아웃
         </button>
       </div>
