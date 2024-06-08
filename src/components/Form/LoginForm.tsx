@@ -3,12 +3,13 @@
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/db/firebase';
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
 import { useSetRecoilState } from 'recoil';
 import { uIdState, userDataState } from '@/recoil/atom';
 import { getUserData } from '@/db/user';
+import Cookies from 'js-cookie';
 import Button from './Button';
 import FormContainer from './FormContainer';
 import TextInput from './TextInput';
@@ -67,34 +68,20 @@ function LoginForm() {
           );
           const { user } = userCredential;
           setUid(user.uid);
+          Cookies.set('uid', user.uid, { expires: 1 / 24 });
 
           const response = await getUserData(user.uid);
           if ('userData' in response) setUserData(response.userData);
 
           toast.success('로그인이 완료되었습니다!', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
+            pauseOnHover: false,
             progress: undefined,
-            theme: 'light',
-            transition: Bounce,
-            onClose: () => router.push('/mypage'),
+            onClose: () => router.push('/'),
           });
         } catch (error) {
           if (error instanceof FirebaseError) {
             toast.error('이메일과 비밀번호를 다시 확인해주세요!', {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
               progress: undefined,
-              theme: 'light',
-              transition: Bounce,
             });
           }
         } finally {
