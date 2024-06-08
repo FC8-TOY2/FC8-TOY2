@@ -176,16 +176,9 @@ function JoinForm() {
             await updateProfile(credentials.user, { photoURL });
           }
           toast.success('회원가입이 완료 되었습니다', {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
+            pauseOnHover: false,
             progress: undefined,
-            theme: 'light',
-            transition: Bounce,
-            onClose: () => router.push('/'),
+            onClose: () => router.push('/login'),
           });
         } catch (error) {
           if (error instanceof FirebaseError) {

@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <Header />
       <SideBar />
-      <main className="pt-[130px] pr-[50px] pl-[310px] pb-[30px]">
+      <main className="pt-[130px] pr-[50px] pl-[310px] pb-[30px] flex justify-center">
         <Banner />
       </main>
     </>
