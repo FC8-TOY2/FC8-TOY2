@@ -4,8 +4,6 @@ import './globals.css';
 import AuthProvider from '@/components/Provider/AuthProvider';
 import ToastProvider from '@/components/Provider/ToastProvider';
 import RecoilProvider from '@/components/Provider/RecoilProvider';
-import SideBar from '@/components/SideBar';
-import Header from '@/components/Header';
 
 const pretendard = localFont({
   src: [
@@ -53,13 +51,7 @@ export default function RootLayout({
       <body className={pretendard.className}>
         <RecoilProvider>
           <AuthProvider>
-            <ToastProvider>
-              <Header />
-              <SideBar />
-              <main className="pt-[130px] pr-[50px] pl-[310px] pb-[30px]">
-                {children}
-              </main>
-            </ToastProvider>
+            <ToastProvider>{children}</ToastProvider>
           </AuthProvider>
         </RecoilProvider>
       </body>
