@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/db/firebase';
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
 import { useSetRecoilState } from 'recoil';
@@ -74,29 +74,14 @@ function LoginForm() {
           if ('userData' in response) setUserData(response.userData);
 
           toast.success('로그인이 완료되었습니다!', {
-            position: 'top-center',
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
             pauseOnHover: false,
-            draggable: true,
             progress: undefined,
-            theme: 'light',
-            transition: Bounce,
             onClose: () => router.push('/mypage'),
           });
         } catch (error) {
           if (error instanceof FirebaseError) {
             toast.error('이메일과 비밀번호를 다시 확인해주세요!', {
-              position: 'top-center',
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
               progress: undefined,
-              theme: 'light',
-              transition: Bounce,
             });
           }
         } finally {
