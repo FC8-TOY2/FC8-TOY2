@@ -91,7 +91,10 @@ function PayStubCorrectForm({
     try {
       if (id) {
         const response = await updatePayStubCorrection(data, uid, id);
-        toast.success(response.message, { onClose: () => router.back() });
+        toast.success(response.message, {
+          pauseOnHover: false,
+          onClose: () => router.back(),
+        });
       } else {
         const response = await addPayStubCorrection(data, uid);
         toast.success(response.message, { onClose: () => router.back() });

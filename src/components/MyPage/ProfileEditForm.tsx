@@ -12,11 +12,11 @@ import { updateProfile } from 'firebase/auth';
 import { Bounce, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
+import { type UserData } from '@/db/user';
 import Button from '../Form/Button';
 import TextInput from '../Form/TextInput';
 import setInputValue from '../Form/setValue';
 import FormContainer from '../Form/FormContainer';
-import { type UserData } from '@/db/user';
 
 function ProfileEditForm({
   userData,

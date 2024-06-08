@@ -9,12 +9,12 @@ import { FirebaseError } from 'firebase/app';
 import { useSetRecoilState } from 'recoil';
 import { uIdState, userDataState } from '@/recoil/atom';
 import { getUserData } from '@/db/user';
+import Cookies from 'js-cookie';
 import Button from './Button';
 import FormContainer from './FormContainer';
 import TextInput from './TextInput';
 import setInputValue from './setValue';
 import validateEmail from './validateEmail';
-import Cookies from "js-cookie";
 
 function LoginForm() {
   const router = useRouter();
@@ -68,7 +68,7 @@ function LoginForm() {
           );
           const { user } = userCredential;
           setUid(user.uid);
-          Cookies.set('uid', user.uid, { expires: 1/24 })
+          Cookies.set('uid', user.uid, { expires: 1 / 24 });
 
           const response = await getUserData(user.uid);
           if ('userData' in response) setUserData(response.userData);
@@ -76,7 +76,7 @@ function LoginForm() {
           toast.success('로그인이 완료되었습니다!', {
             pauseOnHover: false,
             progress: undefined,
-            onClose: () => router.push('/mypage'),
+            onClose: () => router.push('/'),
           });
         } catch (error) {
           if (error instanceof FirebaseError) {

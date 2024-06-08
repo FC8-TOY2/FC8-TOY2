@@ -6,6 +6,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { auth, dataBase } from '@/db/firebase';
 import { uIdState } from '@/recoil/atom';
 import { UserData } from '@/db/user';
+import Image from 'next/image';
 import UserDataDiv from './userData';
 
 function MyPageInfo() {
@@ -34,13 +35,15 @@ function MyPageInfo() {
 
   return (
     <div className="flex justify-around items-center">
-      <img
+      <Image
         className="w-32 h-32 rounded-full mt-4 shadow-2xl"
         src={
           userData?.photoURL ||
           currentUser?.photoURL ||
-          'image/default_profile_img.jpg'
+          '/images/default_profile_img.jpeg'
         }
+        width={128}
+        height={128}
         alt={userData?.userName || '기본 이미지'}
       />
       <div className="flex gap-10">

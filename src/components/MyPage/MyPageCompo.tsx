@@ -5,10 +5,10 @@
 import { useRecoilValue } from 'recoil';
 import { uIdState } from '@/recoil/atom';
 import { useState } from 'react';
+import { type UserData } from '@/db/user';
 import Button from '../Form/Button';
 import MyPageInfo from './MyPageInfo';
 import ProfileEditForm from './ProfileEditForm';
-import { type UserData } from '@/db/user';
 
 interface MyPageCompoProps {
   btnShow: boolean;
