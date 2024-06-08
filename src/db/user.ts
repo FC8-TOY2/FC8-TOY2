@@ -1,5 +1,5 @@
 import { doc, getDoc } from 'firebase/firestore';
-import { dataBase } from './firebase';
+import { auth, dataBase } from './firebase';
 
 export interface UserData {
   error: any;
@@ -8,6 +8,19 @@ export interface UserData {
   email: string;
   jobPosition: string;
   photoURL?: string;
+}
+
+export async function getCurrentUser() {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      unsubscribe()
+      if(user) {
+        resolve({ user: user })
+      } else {
+        reject({ error: '로그인한 유저가 존재하지 않습니다.' })
+      }
+    }, reject)
+  })
 }
 
 export async function getUserData(

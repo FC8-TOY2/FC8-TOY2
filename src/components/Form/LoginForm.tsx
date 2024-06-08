@@ -14,6 +14,7 @@ import FormContainer from './FormContainer';
 import TextInput from './TextInput';
 import setInputValue from './setValue';
 import validateEmail from './validateEmail';
+import Cookies from "js-cookie";
 
 function LoginForm() {
   const router = useRouter();
@@ -67,16 +68,17 @@ function LoginForm() {
           );
           const { user } = userCredential;
           setUid(user.uid);
+          Cookies.set('uid', user.uid, { expires: 1/24 })
 
           const response = await getUserData(user.uid);
           if ('userData' in response) setUserData(response.userData);
 
           toast.success('로그인이 완료되었습니다!', {
             position: 'top-center',
-            autoClose: 2000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
             theme: 'light',
@@ -87,7 +89,7 @@ function LoginForm() {
           if (error instanceof FirebaseError) {
             toast.error('이메일과 비밀번호를 다시 확인해주세요!', {
               position: 'top-center',
-              autoClose: 2000,
+              autoClose: 1000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,

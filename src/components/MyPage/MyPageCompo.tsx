@@ -6,8 +6,9 @@ import { useRecoilValue } from 'recoil';
 import { uIdState } from '@/recoil/atom';
 import { useState } from 'react';
 import Button from '../Form/Button';
-import MyPageInfo, { UserData } from './MyPageInfo';
+import MyPageInfo from './MyPageInfo';
 import ProfileEditForm from './ProfileEditForm';
+import { type UserData } from '@/db/user';
 
 interface MyPageCompoProps {
   btnShow: boolean;

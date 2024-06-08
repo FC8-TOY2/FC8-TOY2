@@ -16,7 +16,7 @@ import Button from '../Form/Button';
 import TextInput from '../Form/TextInput';
 import setInputValue from '../Form/setValue';
 import FormContainer from '../Form/FormContainer';
-import { UserData } from './MyPageInfo';
+import { type UserData } from '@/db/user';
 
 function ProfileEditForm({
   userData,
