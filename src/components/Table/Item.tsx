@@ -1,5 +1,6 @@
-// components/Table/Item.tsx
+'use client';
 
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { Row } from '@/types';
 
@@ -9,6 +10,14 @@ interface ItemProps {
 }
 
 const Item: React.FC<ItemProps> = ({ row, tableType }) => {
+  const router = useRouter();
+  const handleButtonClick = () => {
+    if (tableType === 'salaryFix') {
+      router.push(`/correct/${row.id}`);
+    } else {
+      router.push('/correct');
+    }
+  };
   if (tableType === 'salary') {
     return (
       <li className="border-b border-gray-300 ">
@@ -24,6 +33,7 @@ const Item: React.FC<ItemProps> = ({ row, tableType }) => {
             <button
               type="button"
               className="bg-violet-500 text-white px-3 rounded"
+              onClick={handleButtonClick}
             >
               신청하기
             </button>
@@ -44,16 +54,9 @@ const Item: React.FC<ItemProps> = ({ row, tableType }) => {
             <button
               type="button"
               className="bg-violet-500 text-white px-3 rounded"
+              onClick={handleButtonClick}
             >
               수정
-            </button>
-          </div>
-          <div className="flex-[1] p-1">
-            <button
-              type="button"
-              className="bg-violet-500 text-white px-3 rounded"
-            >
-              삭제
             </button>
           </div>
         </div>

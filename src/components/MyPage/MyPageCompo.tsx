@@ -9,7 +9,11 @@ import Button from '../Form/Button';
 import MyPageInfo, { UserData } from './MyPageInfo';
 import ProfileEditForm from './ProfileEditForm';
 
-function MyPageCompo() {
+interface MyPageCompoProps {
+  btnShow: boolean;
+}
+
+function MyPageCompo({ btnShow }: MyPageCompoProps) {
   const uid = useRecoilValue(uIdState);
   const [editMode, setEditMode] = useState(false);
   const [userData] = useState<UserData | null>(null);
@@ -33,16 +37,18 @@ function MyPageCompo() {
           ) : (
             <>
               <MyPageInfo />
-              <div className="w-full text-end">
-                <Button
-                  type="button"
-                  backgroundColor="bg-violet-600"
-                  buttonInnerText="프로필 수정"
-                  textColor="text-white"
-                  width="w-24"
-                  onClick={handleEditClick}
-                />
-              </div>
+              {btnShow && (
+                <div className="w-full text-end">
+                  <Button
+                    type="button"
+                    backgroundColor="bg-violet-600"
+                    buttonInnerText="프로필 수정"
+                    textColor="text-white"
+                    width="w-24"
+                    onClick={handleEditClick}
+                  />
+                </div>
+              )}
             </>
           )}
         </div>
