@@ -5,6 +5,8 @@ import { Row } from '@/types';
 import { useEffect, useState } from 'react';
 import { getPayStub } from '@/db/payStub';
 import MyPageCompo from '@/components/MyPage/MyPageCompo';
+import SideBar from '@/components/SideBar';
+import Header from '@/components/Header';
 
 export default function Home() {
   const [rows, setRows] = useState<Row[]>([]);
@@ -39,14 +41,20 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <h1 className="text-4xl font-bold">급여내역</h1>
-      <h2 className="my-7 text-2xl font-bold">직원정보</h2>
-      <section className="w-3/4 bg-slate-50 border border-violet-400 flex flex-col selection:justify-center rounded-xl p-4">
-        <MyPageCompo btnShow={false} />
-      </section>
-      <h2 className="my-7 text-2xl font-bold">급여명세</h2>
-      <Table rows={rows} tableType="salary" />
-    </div>
+    <>
+      <Header />
+      <SideBar />
+      <main className="pt-[130px] pr-[50px] pl-[310px] pb-[30px]">
+        <div>
+          <h1 className="text-4xl font-bold">급여내역</h1>
+          <h2 className="my-7 text-2xl font-bold">직원정보</h2>
+          <section className="w-3/4 bg-slate-50 border border-violet-400 flex flex-col selection:justify-center rounded-xl p-4">
+            <MyPageCompo btnShow={false} />
+          </section>
+          <h2 className="my-7 text-2xl font-bold">급여명세</h2>
+          <Table rows={rows} tableType="salary" />
+        </div>
+      </main>
+    </>
   );
 }
