@@ -62,6 +62,13 @@
 
 
 
+## ✅ 미리보기
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FQva8O%2FbtsHS7oP1No%2FAbXLNWWfg6Dkpk2DbwKgxk%2Fimg.png)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FXQOlM%2FbtsHRueRsu3%2FkL0FLHKBTTKosMUqWKgXi0%2Fimg.png)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbFbFbH%2FbtsHTnkEYuJ%2FU0wwe1JQgZyMxPuZpMFi00%2Fimg.png)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkXoh9%2FbtsHTI9XvxI%2FLhUEZRwb8LgHv4l41itrY0%2Fimg.png)
+
+
 ## ✅ 느낀점
 
 #### 김령태
