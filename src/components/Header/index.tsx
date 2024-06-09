@@ -30,7 +30,7 @@ const Header = () => {
   }, [router, setUid, setUserData]);
 
   return (
-    <header className="flex items-center justify-between px-6 fixed w-full h-[80px] border-b border-gray-200">
+    <header className="bg-white flex items-center justify-between px-6 fixed z-50 w-full h-[80px] border-b border-gray-200">
       <Link href="/">
         <Image src="/images/logo.png" alt="logo" width={50} height={57} />
       </Link>
