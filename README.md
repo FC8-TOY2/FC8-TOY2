@@ -58,7 +58,7 @@
 
 ## ✅ User Flow
 
-![](/Users/penguinkim/Downloads/Wireframe - 1.png)
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FQva8O%2FbtsHS7oP1No%2FAbXLNWWfg6Dkpk2DbwKgxk%2Fimg.png)
 
 
 
