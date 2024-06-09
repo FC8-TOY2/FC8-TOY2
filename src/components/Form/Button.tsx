@@ -1,5 +1,4 @@
-interface ButtonProps {
-  type?: 'button' | 'submit' | 'reset' | undefined;
+interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   backgroundColor?: string;
   borderColor?: string;
   buttonInnerText: string;
