@@ -1,5 +1,3 @@
-// src/components/ProfileEditForm.tsx
-
 'use client';
 
 import { useState } from 'react';
@@ -13,6 +11,7 @@ import { Bounce, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
 import { type UserData } from '@/db/user';
+import Image from 'next/image';
 import Button from '../Form/Button';
 import TextInput from '../Form/TextInput';
 import setInputValue from '../Form/setValue';
@@ -68,7 +67,7 @@ function ProfileEditForm({
 
     switch (true) {
       case !uid:
-        console.log('로그인해라');
+        router.push('/login');
         break;
       case userName === '':
         setErrorEmpty();
@@ -172,7 +171,9 @@ function ProfileEditForm({
         onChange={handleProfilePhotoChange}
       />
       {profilePhotoURL && (
-        <img
+        <Image
+          width={128}
+          height={128}
           src={profilePhotoURL}
           alt="프로필 미리보기"
           className="w-32 h-32 rounded-full mt-4"

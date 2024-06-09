@@ -18,7 +18,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       if (user) {
         setUId(user.uid);
       } else {
-        setUId(null);
+        setUId('');
       }
     });
 

@@ -9,11 +9,19 @@ import { useRecoilValue } from 'recoil';
 import { uIdState } from '@/recoil/atom';
 import SideBar from '@/components/SideBar';
 import Header from '@/components/Header';
+import { toast } from 'react-toastify';
 
 export default function Home() {
+  const router = useRouter();
   const [rows, setRows] = useState<Row[]>([]);
   const [error, setError] = useState<string | null>(null);
   const uId = useRecoilValue(uIdState);
+
+  if (!uId) {
+    toast.error('유저를 찾을 수 없습니다.', {
+      onClose: () => router.push('/login'),
+    });
+  }
 
   useEffect(() => {
     async function fetchPayStubCorrections() {
@@ -39,7 +47,6 @@ export default function Home() {
     }
   }, [uId]);
 
-  const router = useRouter();
   const handleButtonClick = () => {
     router.push('/correct');
   };

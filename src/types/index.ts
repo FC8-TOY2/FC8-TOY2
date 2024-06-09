@@ -1,4 +1,5 @@
 export interface Row {
+  id?: string;
   month?: string;
   base_salary?: number;
   overtime_pay?: number;

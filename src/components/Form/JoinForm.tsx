@@ -15,6 +15,7 @@ import {
 } from '@/recoil/atom';
 import { doc, setDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import Image from 'next/image';
 import Button from './Button';
 import FormContainer from './FormContainer';
 import TextInput from './TextInput';
@@ -248,7 +249,9 @@ function JoinForm() {
       />
 
       {profilePhotoURL && (
-        <img
+        <Image
+          width={128}
+          height={128}
           src={profilePhotoURL}
           alt="프로필 미리보기"
           className="w-32 h-32 rounded-full mt-4 shadow-2xl"

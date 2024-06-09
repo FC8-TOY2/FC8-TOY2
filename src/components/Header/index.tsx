@@ -27,7 +27,7 @@ const Header = () => {
     } catch (error) {
       toast.error('로그아웃에 실패했습니다.');
     }
-  }, []);
+  }, [router, setUid, setUserData]);
 
   return (
     <header className="flex items-center justify-between px-6 fixed w-full h-[80px] border-b border-gray-200">

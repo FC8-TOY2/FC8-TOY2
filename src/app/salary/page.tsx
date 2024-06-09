@@ -28,7 +28,6 @@ export default function Home() {
           tax: stub.tax,
           net_pay: stub.net_pay,
         }));
-        console.log(formattedRows);
         setRows(formattedRows);
       }
     }

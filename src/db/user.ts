@@ -13,14 +13,14 @@ export interface UserData {
 export async function getCurrentUser() {
   return new Promise((resolve, reject) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      unsubscribe()
-      if(user) {
-        resolve({ user: user })
+      unsubscribe();
+      if (user) {
+        resolve({ user });
       } else {
-        reject({ error: '로그인한 유저가 존재하지 않습니다.' })
+        reject(new Error());
       }
-    }, reject)
-  })
+    }, reject);
+  });
 }
 
 export async function getUserData(
