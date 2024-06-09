@@ -1,5 +1,5 @@
 interface ButtonProps {
-  type?: string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   backgroundColor?: string;
   borderColor?: string;
   buttonInnerText: string;
