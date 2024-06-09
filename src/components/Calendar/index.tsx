@@ -1,15 +1,10 @@
 'use client';
 
+import type { ExternalEventTypes } from '@toast-ui/calendar';
 import './toastui-calendar.min.css';
 import './tui-date-picker.min.css';
 import './tui-time-picker.min.css';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { dataBase } from '@/db/firebase';
 import {
   Timestamp,
@@ -37,19 +32,13 @@ interface EventData {
   isPrivate?: boolean;
 }
 
-interface DeleteEventProps {
-  id: string;
-  calendarId: string;
-}
-
 const Calendar = dynamic<any>(() => import('@toast-ui/react-calendar'), {
   ssr: false,
 });
 
 function ScheduleCalendar() {
-  const calendarRef = useRef<any>(null);
+  const calendarRef = useRef<typeof Calendar>(null);
   const [events, setEvents] = useState<any[]>([]);
-
   useEffect(() => {
     const fetchEvents = async () => {
       const querySnapshot = await getDocs(collection(dataBase, 'schedules'));
@@ -105,11 +94,6 @@ function ScheduleCalendar() {
     [],
   );
 
-  const getCalInstance = useCallback(
-    () => calendarRef.current?.getInstance?.(),
-    [],
-  );
-
   const showErrorToast = (message: string) => {
     toast.error(message, {
       progress: undefined,
@@ -122,67 +106,78 @@ function ScheduleCalendar() {
       calendarId: eventData.calendarId,
       title: eventData.title,
       isAllday: eventData.isAllday,
-      start: eventData.start.toDate(),
-      end: eventData.end.toDate(),
+      start: eventData.start?.toDate(),
+      end: eventData.end?.toDate(),
       category: eventData.isAllday ? 'allday' : 'time',
       location: eventData.location,
       state: eventData.state,
       isPrivate: eventData.isPrivate,
     };
-
     try {
       const addEvent = await addDoc(collection(dataBase, 'schedules'), event);
       const newEvent = {
         ...event,
         id: addEvent.id,
       };
-      getCalInstance().createEvents([newEvent]);
+      setEvents([...events, newEvent]);
     } catch (error) {
       if (error instanceof FirebaseError) {
         showErrorToast('파이어베이스 오류가 발생했습니다!');
       } else {
-        console.error(error);
         showErrorToast('오류가 발생 했습니다!');
       }
     }
   };
 
-  const onBeforeDeleteEvent = async (deletsEventProps: DeleteEventProps) => {
-    const { id, calendarId } = deletsEventProps;
+  const onBeforeDeleteEvent: ExternalEventTypes['beforeDeleteEvent'] = async (
+    deletsEventProps,
+  ) => {
+    const { id } = deletsEventProps;
     try {
       const deleteEvent = doc(dataBase, 'schedules', id);
       await deleteDoc(deleteEvent);
-      getCalInstance().deleteEvent(id, calendarId);
+      setEvents(
+        events.filter((event) => {
+          return event.id !== id;
+        }),
+      );
     } catch (error) {
       if (error instanceof FirebaseError) {
         showErrorToast('파이어베이스 오류가 발생했습니다!');
       } else {
-        console.error(error);
         showErrorToast('오류가 발생 했습니다!');
       }
     }
   };
-
-  const onBeforeUpdateEvent = async (updateData: any) => {
+  const onBeforeUpdateEvent: ExternalEventTypes['beforeUpdateEvent'] = async (
+    updateData: any,
+  ) => {
     const targetEvent = updateData.event;
     const changes = { ...updateData.changes };
-
     if (changes.start) changes.start = new Date(changes.start);
     if (changes.end) changes.end = new Date(changes.end);
 
     try {
       const updateEventDoc = doc(dataBase, 'schedules', targetEvent.id);
       await updateDoc(updateEventDoc, changes);
-      getCalInstance().updateEvent(targetEvent.id, targetEvent.calendarId, {
-        ...changes,
-        start: changes.start ? new Date(changes.start) : targetEvent.start,
-        end: changes.end ? new Date(changes.end) : targetEvent.end,
-      });
+      setEvents(
+        events.map((event) => {
+          if (event.id === targetEvent.id) {
+            return {
+              ...targetEvent,
+              start: changes.start
+                ? new Date(changes.start)
+                : targetEvent.start,
+              end: changes.end ? new Date(changes.end) : targetEvent.end,
+            };
+          }
+          return event;
+        }),
+      );
     } catch (error) {
       if (error instanceof FirebaseError) {
         showErrorToast('파이어베이스 오류가 발생했습니다!');
       } else {
-        console.error(error);
         showErrorToast('오류가 발생 했습니다!');
       }
     }
@@ -190,6 +185,8 @@ function ScheduleCalendar() {
 
   return (
     <Calendar
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       ref={calendarRef}
       height="600px"
       view="month"
