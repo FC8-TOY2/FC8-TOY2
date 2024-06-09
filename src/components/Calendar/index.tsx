@@ -1,6 +1,5 @@
 'use client';
 
-import Calendar from '@toast-ui/react-calendar';
 import './toastui-calendar.min.css';
 import './tui-date-picker.min.css';
 import './tui-time-picker.min.css';
@@ -23,6 +22,7 @@ import {
 } from 'firebase/firestore';
 import { FirebaseError } from 'firebase/app';
 import { Bounce, toast } from 'react-toastify';
+import dynamic from 'next/dynamic';
 
 interface EventData {
   id?: string;
@@ -41,6 +41,10 @@ interface DeleteEventProps {
   id: string;
   calendarId: string;
 }
+
+const Calendar = dynamic<any>(() => import('@toast-ui/react-calendar'), {
+  ssr: false,
+});
 
 function ScheduleCalendar() {
   const calendarRef = useRef<any>(null);
@@ -231,10 +235,10 @@ function ScheduleCalendar() {
         monthMoreClose() {
           return '<div style="font-size: 1rem; margin-top: 0.25rem">X</div>';
         },
-        monthGridHeaderExceed(hiddenEvents) {
+        monthGridHeaderExceed(hiddenEvents: number) {
           return `<span>${hiddenEvents} +</span>`;
         },
-        monthDayName(model) {
+        monthDayName(model: any) {
           return `<div style="font-size: 1rem; font-weight: bold; text-align: center">${model.label}</div>`;
         },
       }}
