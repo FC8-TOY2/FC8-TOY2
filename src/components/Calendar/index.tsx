@@ -21,7 +21,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { FirebaseError } from 'firebase/app';
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import dynamic from 'next/dynamic';
 
 interface EventData {
@@ -112,15 +112,8 @@ function ScheduleCalendar() {
 
   const showErrorToast = (message: string) => {
     toast.error(message, {
-      position: 'top-center',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
       progress: undefined,
-      theme: 'light',
-      transition: Bounce,
+      closeOnClick: true,
     });
   };
 
@@ -148,6 +141,7 @@ function ScheduleCalendar() {
       if (error instanceof FirebaseError) {
         showErrorToast('파이어베이스 오류가 발생했습니다!');
       } else {
+        console.error(error);
         showErrorToast('오류가 발생 했습니다!');
       }
     }
@@ -163,6 +157,7 @@ function ScheduleCalendar() {
       if (error instanceof FirebaseError) {
         showErrorToast('파이어베이스 오류가 발생했습니다!');
       } else {
+        console.error(error);
         showErrorToast('오류가 발생 했습니다!');
       }
     }
@@ -187,6 +182,7 @@ function ScheduleCalendar() {
       if (error instanceof FirebaseError) {
         showErrorToast('파이어베이스 오류가 발생했습니다!');
       } else {
+        console.error(error);
         showErrorToast('오류가 발생 했습니다!');
       }
     }
