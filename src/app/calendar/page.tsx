@@ -1,3 +1,5 @@
+'use client';
+
 import ScheduleCalendar from '@/components/Calendar';
 import React from 'react';
 import SideBar from '@/components/SideBar';
